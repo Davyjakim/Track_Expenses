@@ -20,9 +20,8 @@ import NotFound from "./components/NotFoundPage";
 
 function App() {
   return (
-    <Router>
       <AppContent />
-    </Router>
+
   );
 }
 
