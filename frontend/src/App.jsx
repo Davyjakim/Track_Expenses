@@ -124,7 +124,7 @@ function AppContent() {
         clearTimeout(inactivityTimerRef.current);
       }
     };
-  }, [isAuthenticated]);
+  }, [isAuthenticated,resetInactivityTimer]);
 
   return (
     <div className="md:flex md:justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">

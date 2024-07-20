@@ -5,8 +5,7 @@ const bodyParser = require('body-parser');
 const config = require('config')
 
 
-console.log("Db_url", process.env.db_url)
-console.log("TrackExpense_jwtPrivateKey", process.env.TrackExpense_jwtPrivateKey)
+
 console.log("ENV", process.env.NODE_ENV)
 
 
