@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import FormInput from "../components/global/FormInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 function LogIn() {
+  const [isloading, setisloading]= useState(false)
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -27,6 +29,7 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm) {
+      setisloading(true)
       axios
         .post("https://track-expenses-api.onrender.com/auth", {email: values.email, password:values.password})
         .then((res) => {
@@ -41,12 +44,15 @@ function LogIn() {
             SetErrors("Failed to login")
           }
           
+        }).finally(()=>{
+          setisloading(false)
         });
     }
   };
 
   return (
     <div className="min-h-screen flex justify-center items-center">
+      {isloading&&<Loading/>}
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Login</h2>
         {errors ? (

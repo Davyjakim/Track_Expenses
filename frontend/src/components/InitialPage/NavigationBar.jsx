@@ -5,8 +5,11 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import userService from "../../services/user-service";
+import Loading from "../Loading";
+
 
 function NavigationBar() {
+  const [isloading, setisloading]= useState(false)
   const [menuOpen, setMenuOpen] = useState(false);
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
@@ -19,12 +22,15 @@ function NavigationBar() {
     const token = localStorage.getItem("authToken");
 
     const getName = async () => {
+      setisloading(true)
       try {
         const res = await userService.getLoggedUserInfo();
         setUsername(res.data.name);
       } catch (error) {
         console.log(error.message);
         alert("Something went wrong");
+      }finally{
+        setisloading(false)
       }
     };
 
@@ -47,6 +53,7 @@ function NavigationBar() {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-purple-500">
+      {isloading&&<Loading/>}
       <div className="flex justify-between p-7 items-center">
         <h1 className="font-mono font-semibold  text-stone-800 md:text-[36px] sm:text-[24px]">
           Track Expenses

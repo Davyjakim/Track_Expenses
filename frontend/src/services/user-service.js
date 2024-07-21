@@ -35,7 +35,7 @@ class UserService {
   }
   signUp(values) {
     return axios.post("https://track-expenses-api.onrender.com/users/signup", {
-      username: values.username,
+      name: values.username,
       email: values.email,
       password: values.password,
     });

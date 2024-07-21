@@ -3,6 +3,7 @@ import SelectCurrency from "../global/SelectACurrency";
 import FormInput from "../global/FormInput";
 import userService from "../../services/user-service";
 import PopUpMessage from "../global/PopUpMessage";
+import Loading from "../Loading";
 function PreviewFiltersPart(props) {
   const {
     selectedCurrency,
@@ -16,7 +17,7 @@ function PreviewFiltersPart(props) {
     setendTimeframe,
     setstartTimeframe,
   } = props;
-
+  const [isloading, setisloading]= useState(false)
   const [message, setmessage]= useState("")
   const [errors, setErrors] = useState({});
 const [isPopupVisible,setisPopupVisible]= useState(false)
@@ -44,6 +45,7 @@ const [isPopupVisible,setisPopupVisible]= useState(false)
     if (validateForm()) {
       const formattedStartDate = formatDate(startdate);
       const formattedEndDate = formatDate(enddate);
+      setisloading(true);
       userService.getFilteredWeeklyExpenses(formattedStartDate,formattedEndDate,selectedCurrency)
         .then((result) => {
           setweeklyexpenses(result.data);
@@ -51,22 +53,26 @@ const [isPopupVisible,setisPopupVisible]= useState(false)
         .catch((err) => {
           setisPopupVisible(true)
           setmessage(err.response.data.error)
+        }).finally(()=>{
+          setisloading(false)
         });
         userService.getRecentMonthlyExpense(selectedCurrency,formattedStartDate,formattedEndDate)
         .then((res) => {
           setMonthlyexpense(res.data);
           setstartTimeframe(startdate);
           setendTimeframe(enddate);
-          console.log(res.data);
         })
         .catch((err) => {
           setisPopupVisible(true)
           setmessage(err.response.data.error)
+        }).finally(()=>{
+          setisloading(false)
         });
     }
   };
   return (
     <form onSubmit={HandleOnsubmit}>
+      {isloading&&<Loading/>}
       <PopUpMessage isPopupVisible={isPopupVisible} title="Oupps" message={message} setisPopupVisible={setisPopupVisible} />
       <div className="flex  font-semibold mt-10 flex-col items-center gap-6 ">
         <span className="text-lg">Filter Your Data By Date</span>

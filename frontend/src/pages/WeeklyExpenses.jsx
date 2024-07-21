@@ -3,10 +3,11 @@ import SelectCurrency from "../components/global/SelectACurrency";
 import FormInput from "../components/global/FormInput";
 import userService from "../services/user-service";
 import PopUpMessage from "../components/global/PopUpMessage";
-
+import Loading from "../components/Loading";
 
 function WeeklyExpenses() {
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [isloading, setisloading]= useState(false)
   const [date, setdate] = useState(new Date());
   const [startDate, setstartdate] = useState(new Date());
   const [isExpenseOpen, setisExpenseOpen] = useState(false);
@@ -30,16 +31,18 @@ function WeeklyExpenses() {
   useEffect(() => {
     setdate(new Date());
     const fetchExpenses = async () => {
+      setisloading(true);
       try {
         const res = await userService.getStartDate();
         const { startdate, isExpenseOpen, currency } = res.data;
-        console.log(startdate)
         setSelectedCurrency(currency);
        if(!startdate){ setstartdate(new Date())}else{ setstartdate(new Date(startdate));}
         setisExpenseOpen(isExpenseOpen);
       } catch (err) {
         setisPopupVisibleError(true);
         setmessage(err.response.data);
+      }finally{
+        setisloading(false)
       }
     };
     fetchExpenses();
@@ -63,12 +66,15 @@ function WeeklyExpenses() {
   const handleSubmitStart = (e) => {
     if (e) e.preventDefault();
     if (validateForm()) {
+      setisloading(true)
       userService
         .postWeeklyExpense(startingFunds, selectedCurrency)
         .then((result) => {})
         .catch((err) => {
           setisPopupVisibleError(true);
           setmessage(err.response.data);
+        }).finally(()=>{
+          setisloading(false)
         });
       setstartvalue(0);
       setisExpenseOpen(true);
@@ -77,6 +83,7 @@ function WeeklyExpenses() {
   const handleSubmitEnd = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setisloading(true)
       userService
         .putWeeklyExpense(endingFunds)
         .then((results) => {
@@ -86,11 +93,14 @@ function WeeklyExpenses() {
         .catch((err) => {
           setisPopupVisibleError(true);
           setmessage(err.response.data);
+        }).finally(()=>{
+          setisloading(false)
         });
     }
   };
   return (
     <div className="px-4 sm:px-6">
+      {isloading&& <Loading/>}
   <PopUpMessage
     isPopupVisible={isPopupVisibleError}
     title="Oupps"

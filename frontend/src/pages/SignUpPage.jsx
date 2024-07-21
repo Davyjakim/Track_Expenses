@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormInput from "../components/global/FormInput";
 import userService from "../services/user-service";
 import { useNavigate } from "react-router-dom";
-
+import Loading from "../components/Loading";
 const initialValues = {
   username: "",
   email: "",
@@ -10,6 +10,7 @@ const initialValues = {
 };
 
 function SignUpPage() {
+  const [isloading, setisloading]= useState(false)
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -30,13 +31,17 @@ function SignUpPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setisloading(true)
         userService.signUp(values)
         .then((data) => {
             setValues(initialValues);
             setIsPopupVisible(true);
         })
         .catch((error) => {
-          alert("Sign up failed please try again");
+          
+          alert(error.response.data);
+        }).finally(()=>{
+          setisloading(false)
         });
     }
   };
@@ -114,6 +119,7 @@ function SignUpPage() {
           </div>
         </div>
       )}
+      {isloading&& <Loading />}
     </div>
   );
 }
