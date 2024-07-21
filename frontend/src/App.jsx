@@ -32,7 +32,7 @@ function AppContent() {
     !!localStorage.getItem("authToken")
   );
   const [hideNavigationBar, setHideNavigationBar] = useState(true);
-  const inactivityTimeout = 5 * 60 * 1000; // 5 minutes
+  const inactivityTimeout = 30 * 60 * 1000; // 5 minutes
   const inactivityTimerRef = useRef(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -126,7 +126,7 @@ function AppContent() {
   }, [isAuthenticated,resetInactivityTimer]);
 
   return (
-    <div className="md:flex md:justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
+    <div className="md:flex md:justify-center min-h-screen max-w-screen overflow-hidden  bg-gradient-to-r from-blue-500 to-purple-500">
       <div className="max-w-[1440px] w-full">
         <div className="sticky top-0">{!hideNavigationBar && <NavigationBar />}</div>
 
