@@ -3,6 +3,7 @@ import FormInput from "../components/global/FormInput";
 import { useEffect, useState } from "react";
 import userService from "../services/user-service";
 import PopUpMessage from "../components/global/PopUpMessage";
+import Loading from "../components/Loading";
 const InitialValues = () => ({
   currency: "",
   rent: 0,
@@ -13,7 +14,7 @@ const InitialValues = () => ({
 
 function MonthlyExpensesPage() {
   const [selectedCurrency, setSelectedCurrency] = useState("");
-
+  const [isloading, setisloading]= useState(false)
   const [values, setValues] = useState(InitialValues);
   const [errors, SetErrors] = useState({});
   const [message, setmessage]= useState("")
@@ -43,14 +44,18 @@ const [isPopupVisible,setisPopupVisible]= useState(false)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setisloading(true);
       userService.postMonthlyExpense(values)
         .then((result) => {
           console.log(result.data);
           setValues(InitialValues);
+          
         })
         .catch((er) => {
           setisPopupVisible(true)
           setmessage(er.response.data)
+        }).finally(()=>{
+          setisloading(false)
         });
 
       setValues(InitialValues);
@@ -62,6 +67,7 @@ const [isPopupVisible,setisPopupVisible]= useState(false)
       onSubmit={handleSubmit}
       className=" p-6 m-4 rounded-lg flex justify-center"
     >
+      {isloading&& <Loading/>}
       <PopUpMessage isPopupVisible={isPopupVisible} title="Oupps" message={message} setisPopupVisible={setisPopupVisible} />
       <div className="w-full max-w-md">
         <section className="mb-6">
