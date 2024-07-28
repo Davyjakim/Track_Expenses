@@ -108,8 +108,8 @@ function WeeklyExpenses() {
     setisPopupVisible={setisPopupVisibleError}
   />
   <div className="mb-4">
-    <h1 className="text-center text-md font-semibold">
-      Record your Weekly Expenses
+    <h1 className="text-center md:text-lg font-semibold">
+      Record Your Current Account Balance 
     </h1>
   </div>
   <section className="flex flex-col sm:flex-row justify-between">

@@ -34,7 +34,7 @@ class UserService {
     return apiClient.put("/weeklyexpenses", { endingFunds });
   }
   signUp(values) {
-    return axios.post("https://track-expenses-api.onrender.com/users/signup", {
+    return axios.post("https://trackexpensesapi-production.up.railway.app/users/signup", {
       name: values.username,
       email: values.email,
       password: values.password,

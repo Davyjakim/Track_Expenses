@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function InitialPage(props) {
   const { isAuthenticated } = props;
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");

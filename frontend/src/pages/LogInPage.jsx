@@ -4,11 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 
-
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 function LogIn() {
-  const [isloading, setisloading]= useState(false)
+  const [isloading, setisloading] = useState(false);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -17,7 +16,7 @@ function LogIn() {
   const navigate = useNavigate();
 
   const validateForm = () => {
-    let errors = '';
+    let errors = "";
     if (!isEmail(values.email)) errors = "email or password invalid";
     SetErrors(errors);
 
@@ -29,32 +28,39 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm) {
-      setisloading(true)
+      setisloading(true);
       axios
-        .post("https://track-expenses-api.onrender.com/auth", {email: values.email, password:values.password})
+        .post("https://trackexpensesapi-production.up.railway.app/auth", {
+          email: values.email,
+          password: values.password,
+        })
         .then((res) => {
           localStorage.setItem("authToken", res.data);
-          navigate("/")
-          window.location.reload()
+          navigate("/");
+          window.location.reload();
         })
         .catch((err) => {
-          if(!err.response.data){
-            SetErrors(err.response.data)
-          }else{
-            SetErrors("Failed to login")
+          if (err.response && err.response.data) {
+            SetErrors(err || "Failed to login");
+          } else {
+            SetErrors("Failed to login");
+
           }
-          
-        }).finally(()=>{
-          setisloading(false)
+          console.log(err)
+        })
+        .finally(() => {
+          setisloading(false);
         });
     }
   };
 
   return (
     <div className="min-h-screen flex justify-center items-center">
-      {isloading&&<Loading/>}
+      {isloading && <Loading />}
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Login</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Login
+        </h2>
         {errors ? (
           <div className="mb-4 text-center text-red-600">{errors}</div>
         ) : null}
