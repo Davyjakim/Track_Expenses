@@ -8,7 +8,9 @@ import userService from "../../services/user-service";
 import Loading from "../Loading";
 
 
-function NavigationBar() {
+function NavigationBar(props) {
+
+  const {setIsAdmin}=props
   const [isloading, setisloading]= useState(false)
   const [menuOpen, setMenuOpen] = useState(false);
   const [username, setUsername] = useState("");
@@ -26,6 +28,7 @@ function NavigationBar() {
       try {
         const res = await userService.getLoggedUserInfo();
         setUsername(res.data.name);
+        setIsAdmin(res.data.isAdmin)
       } catch (error) {
         console.log(error.message);
         alert("Something went wrong");

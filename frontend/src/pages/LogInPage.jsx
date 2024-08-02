@@ -40,13 +40,12 @@ function LogIn() {
           window.location.reload();
         })
         .catch((err) => {
+          let errorMessage = "Failed to login";
           if (err.response && err.response.data) {
-            SetErrors(err || "Failed to login");
-          } else {
-            SetErrors("Failed to login");
-
+            errorMessage = err.response.data.message || errorMessage;
           }
-          console.log(err)
+          SetErrors(errorMessage);
+          console.log(err.message);
         })
         .finally(() => {
           setisloading(false);

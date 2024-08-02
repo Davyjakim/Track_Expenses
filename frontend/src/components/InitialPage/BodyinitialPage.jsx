@@ -3,7 +3,11 @@ import RecordExpesense from "../../assets/RecordExpenses.svg";
 import PreviewExpenses from "../../assets/PreviewExpenses.svg";
 import HowItWoks from "../../pages/HowItWoks";
 import { FaQuestionCircle } from "react-icons/fa";
-function BodyLoggedOut() {
+import { useNavigate } from "react-router-dom";
+import { RiInformationFill } from "react-icons/ri";
+function BodyLoggedOut(props) {
+  const {isAdmin}=props
+ const navigate= useNavigate()
   const [isopen, setisopen] = useState(false);
 
   return (
@@ -16,7 +20,16 @@ function BodyLoggedOut() {
           <FaQuestionCircle />
         </div>
       </button>
+     
       {isopen && <HowItWoks setisopen={setisopen} />}
+      {isAdmin&& <button className="absolute top-0 hover:scale-105 left-9" onClick={()=>{
+        navigate("/Admin")
+      }}>
+        <div className="flex items-center gap-2">
+          <div>Users Info</div>
+          <RiInformationFill />
+        </div>
+      </button>}
       <div className="flex flex-col items-center mb-8 md:mb-0">
         <img
           className="max-w-screen"
