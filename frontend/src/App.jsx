@@ -21,17 +21,18 @@ function App() {
     setIsPopupVisible,
   } = useApp();
 
-  const [isAdmin, setIsAdmin]= useState(false)
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isopen, setisopen] = useState(false);
   return (
-    <div className="md:flex md:justify-center min-h-screen max-w-screen overflow-hidden  bg-gradient-to-r from-blue-500 to-purple-500">
-      <div className="max-w-[1440px] w-full">
-        <div className="sticky top-0">
+    <div className={`${isopen?"absolute":""} min-h-screen max-w-screen h-full w-full bg-gradient-to-r from-blue-500 to-purple-500 overflow-y-auto md:flex md:justify-center`}>
+      <div className="relative w-full max-w-[1440px]">
+        <div className="sticky top-0 z-10">
           {!hideNavigationBar && <NavigationBar setIsAdmin={setIsAdmin} />}
         </div>
 
-        <div>
+        <div className="relative">
           <Routes>
-            <Route path="/" element={<BodyinitialPage isAdmin={isAdmin} />} />
+            <Route path="/" element={<BodyinitialPage isopen={isopen} setisopen={setisopen}  isAdmin={isAdmin} />} />
             <Route
               path="/initialpage"
               element={<InitialPage isAuthenticated={isAuthenticated} />}
@@ -45,6 +46,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+
         {isPopupVisible && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
             <div className="absolute top-28 bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">

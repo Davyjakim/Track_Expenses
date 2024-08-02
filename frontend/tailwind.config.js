@@ -10,13 +10,14 @@ module.exports = {
         },
       },
       animation: {
-        'bounce-slow': 'bounce 1.5s infinite',
-        'bounce-slow-1': 'bounce 1.5s infinite 0.4s',
-        'bounce-slow-2': 'bounce 1.5s infinite 0.6s',
-        'bounce-slow-3': 'bounce 1.5s infinite 0.8s',
+        "bounce-slow": "bounce 1.5s infinite",
+        "bounce-slow-1": "bounce 1.5s infinite 0.4s",
+        "bounce-slow-2": "bounce 1.5s infinite 0.6s",
+        "bounce-slow-3": "bounce 1.5s infinite 0.8s",
       },
     },
     screens: {
+      ss: "120px",
       sm: "440px",
       // => @media (min-width: 640px) { ... }
 

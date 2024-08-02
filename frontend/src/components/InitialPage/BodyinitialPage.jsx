@@ -6,12 +6,12 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { RiInformationFill } from "react-icons/ri";
 function BodyLoggedOut(props) {
-  const {isAdmin}=props
+  const {isAdmin,isopen,setisopen}=props
  const navigate= useNavigate()
-  const [isopen, setisopen] = useState(false);
+ 
 
   return (
-    <div className=" relative md:flex p-4 sm:flex-col md:flex-row md:justify-evenly md:text-[20px]  items-center">
+    <div className=" relative h-max md:flex p-4 sm:flex-col md:flex-row md:justify-evenly md:text-[20px]  items-center">
       <button className="absolute top-0 hover:scale-105 right-9" onClick={()=>{
         setisopen(true)
       }}>

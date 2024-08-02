@@ -72,7 +72,7 @@ function AdminPage() {
   };
 
   return (
-    <div className="mx-5 max-w-full p-4 bg-slate-400">
+    <div className={`mx-5 z-0  p-4 bg-slate-400 `}>
       {isloading && <Loading />}
       {ispopupopen && (
         <ViewdetailsF
@@ -88,7 +88,7 @@ function AdminPage() {
         <h1 className="text-2xl font-bold mb-4">
           User Info({allUsers.length})
         </h1>
-        <div className="min-w-full bg-[#FBEEE4] overflow-y-auto w-max overflow-x-hidden">
+        <div className="min-w-full bg-[#FBEEE4] overflow-y-auto w-full overflow-x-hidden">
           <div className="hidden md:flex bg-gray-100">
             <div className="py-2 px-4 text-start border-b border-r w-1/3">
               Name
